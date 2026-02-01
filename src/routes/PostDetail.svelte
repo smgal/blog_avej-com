@@ -32,10 +32,6 @@
     {#if post}
         <div class="post-header">
             <div class="meta-row">
-                <span class="label">FILE:</span>
-                <span class="value">{post.slug}.md</span>
-            </div>
-            <div class="meta-row">
                 <span class="label">DATE:</span>
                 <span class="value">{post.date}</span>
             </div>
