@@ -39,11 +39,21 @@
                 <span class="label">DATE:</span>
                 <span class="value">{post.date}</span>
             </div>
-            <div class="meta-row">
-                <span class="label">PERM:</span>
-                <span class="value">r--r--r--</span>
-            </div>
+            {#if post.tags && post.tags.length > 0}
+                <div class="meta-row">
+                    <span class="label">TAGS:</span>
+                    <span class="value">[{post.tags.join(", ")}]</span>
+                </div>
+            {/if}
+            {#if post.summary}
+                <div class="meta-row">
+                    <span class="label">DESC:</span>
+                    <span class="value">{post.summary}</span>
+                </div>
+            {/if}
         </div>
+
+        <h1 class="post-title">{post.title}</h1>
 
         <div class="separator">
             ==================================================
