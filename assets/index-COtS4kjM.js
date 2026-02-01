@@ -5,6 +5,7 @@ summary: 정적 웹사이트의 철학에 대하여
 tags: [thinking, minimalist, web]
 ---
 
+# Why Static?
 In an age of dynamic complexity, static simplicity is a rebellious act.
 No databases, no backend logic, just pure content served instantly.
 This is the philosophy behind the reboot.
@@ -28,7 +29,7 @@ title: Hello World
 summary: 첫 번째 블로그 포스트
 tags: [welcome, intro]
 ---
-
+# System Reboot: The Modern Terminal
 This is the first post. 2026-02-01.
 Migrating from legacy systems to a new Svelte 5 based architecture.
 Everything feels faster, cleaner, and more efficient.
