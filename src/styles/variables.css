@@ -1,0 +1,102 @@
+/* Modern Terminal Design System */
+
+:root {
+    /* Default Theme: Neo-Future (Tokyo Night inspired) */
+    --bg-color: #1a1b26;
+    --fg-color: #a9b1d6;
+    --accent-primary: #ff007c;
+    /* Neon Pink */
+    --accent-secondary: #00e5ff;
+    /* Cyan */
+    --dim-color: #565f89;
+    --border-color: #414868;
+
+    --font-mono: 'Courier New', Courier, monospace;
+    --font-sans: 'Outfit', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
+    --font-post: Arial, Helvetica, sans-serif;
+    --code-bg: #151520;
+    /* Slightly darker than main bg */
+    --line-height: 1.6;
+}
+
+/* Theme: Amber Retro */
+[data-theme="amber"] {
+    --bg-color: #1e1e1e;
+    --fg-color: #ffb000;
+    --accent-primary: #ffb000;
+    --accent-secondary: #ffca28;
+    --dim-color: #6d4c00;
+    --border-color: #ffb000;
+    --code-bg: #141414;
+}
+
+/* Theme: Hacker Green */
+[data-theme="green"] {
+    --bg-color: #0d0d0d;
+    --fg-color: #00ff00;
+    --accent-primary: #00ff00;
+    --accent-secondary: #008000;
+    --dim-color: #003300;
+    --border-color: #00ff00;
+    --code-bg: #080808;
+}
+
+/* Theme: Dracula */
+[data-theme="dracula"] {
+    --bg-color: #282a36;
+    --fg-color: #f8f8f2;
+    --accent-primary: #ff79c6;
+    --accent-secondary: #8be9fd;
+    --dim-color: #6272a4;
+    --border-color: #bd93f9;
+    --code-bg: #21222c;
+}
+
+/* Theme: Monokai */
+[data-theme="monokai"] {
+    --bg-color: #272822;
+    --fg-color: #f8f8f2;
+    --accent-primary: #f92672;
+    --accent-secondary: #a6e22e;
+    --dim-color: #75715e;
+    --border-color: #66d9ef;
+    --code-bg: #1e1f1c;
+}
+
+/* Theme: CMD (Classic) */
+[data-theme="cmd"] {
+    --bg-color: #0c0c0c;
+    --fg-color: #cccccc;
+    --accent-primary: #ffffff;
+    --accent-secondary: #ffff00;
+    --dim-color: #808080;
+    --border-color: #cccccc;
+    --code-bg: #000000;
+}
+
+body {
+    background-color: var(--bg-color);
+    color: var(--fg-color);
+    font-family: var(--font-mono);
+    margin: 0;
+    padding: 0;
+    transition: background-color 0.3s, color 0.3s;
+    overflow: hidden;
+    /* App-like feel */
+    height: 100vh;
+    width: 100vw;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+a {
+    color: var(--accent-secondary);
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: var(--accent-primary);
+}
