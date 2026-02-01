@@ -35,16 +35,18 @@
                 <span class="label">DATE:</span>
                 <span class="value">{post.date}</span>
             </div>
-            {#if post.tags && post.tags.length > 0}
-                <div class="meta-row">
-                    <span class="label">TAGS:</span>
-                    <span class="value">[{post.tags.join(", ")}]</span>
-                </div>
-            {/if}
             {#if post.summary}
                 <div class="meta-row">
                     <span class="label">DESC:</span>
                     <span class="value">{post.summary}</span>
+                </div>
+            {/if}
+            {#if post.tags && post.tags.length > 0}
+                <div class="meta-row">
+                    <span class="label">TAGS:</span>
+                    <span class="value"
+                        >{post.tags.map((t) => "#" + t).join(" ")}</span
+                    >
                 </div>
             {/if}
         </div>
