@@ -1,31 +1,13 @@
 <script>
-    import { router } from "../lib/router.svelte.js";
-    import { getPosts } from "../lib/posts.js";
-    import { marked } from "marked";
-    import hljs from "highlight.js";
+    import { router } from "@/lib/router.svelte.js";
+    import { getPosts } from "@/lib/posts.js";
+    import { parseMarkdown } from "@/lib/markdown.js";
+    import BackLink from "@/lib/components/BackLink.svelte";
     import "highlight.js/styles/base16/ros-pine-moon.css"; // A terminal-like modern theme
 
-    let slug = $derived(router.route.split("/").pop());
-
+    let slug = $derived(router.route.split("/").filter(Boolean).pop());
     let post = $derived(getPosts().find((p) => p.slug === slug));
-
-    function parseTerminalMd(text) {
-        if (!text) return "";
-        // Use marked with breaks: true to emulate terminal-like line breaks
-        return marked.parse(text, { breaks: true });
-    }
-
-    // Apply syntax highlighting whenever the post content updates
-    $effect(() => {
-        if (post) {
-            // Wait for DOM update
-            setTimeout(() => {
-                document.querySelectorAll("pre code").forEach((el) => {
-                    hljs.highlightElement(el);
-                });
-            }, 0);
-        }
-    });
+    let rendered = $derived(post ? parseMarkdown(post.content) : "");
 </script>
 
 <div class="page-content">
@@ -59,24 +41,20 @@
 
         <article class="post-content">
             <!-- eslint-disable-next-line svelte/no-at-html-tags -->
-            {@html parseTerminalMd(post.content)}
+            {@html rendered}
         </article>
 
         <div class="separator">
             ==================================================
         </div>
         <div class="footer-nav">
-            <button onclick={() => router.navigate("/posts")} class="nav-btn"
-                >[ cd .. ]</button
-            >
+            <BackLink to="/posts" />
         </div>
     {:else}
         <div class="error-box">
             <h2>404 - FILE NOT FOUND</h2>
             <p>The system cannot find the file specified: {slug}</p>
-            <button onclick={() => router.navigate("/posts")} class="nav-btn"
-                >[ Return ]</button
-            >
+            <BackLink to="/posts" label="back to posts" />
         </div>
     {/if}
 </div>
@@ -170,18 +148,6 @@
         font-family: inherit !important;
     }
 
-    .nav-btn {
-        background: none;
-        border: none;
-        color: var(--dim-color);
-        cursor: pointer;
-        font-family: inherit;
-        font-size: 1rem;
-        padding: 0;
-    }
-    .nav-btn:hover {
-        color: var(--accent-primary);
-    }
     .error-box {
         border: 1px solid red;
         padding: 1rem;

@@ -4,7 +4,6 @@
   import { router } from "@/lib/router.svelte.js";
   import { resolve } from "@/lib/routes.js";
 
-  // The CurrentPage component is derived from the active route pattern
   let CurrentPage = $derived(resolve(router.route));
 </script>
 

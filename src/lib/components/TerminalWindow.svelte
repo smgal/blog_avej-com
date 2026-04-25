@@ -1,5 +1,5 @@
 <script>
-  import { themeStore } from "../stores/theme.svelte.js";
+  import { themeStore, themes } from "@/lib/stores/theme.svelte.js";
   import BreadcrumbNav from "./BreadcrumbNav.svelte";
 
   let { children } = $props();
@@ -31,12 +31,9 @@
         value={themeStore.value}
         onchange={(e) => themeStore.set(e.target.value)}
       >
-        <option value="">NEO FUTURE</option>
-        <option value="amber">AMBER RETRO</option>
-        <option value="green">HACKER GREEN</option>
-        <option value="dracula">DRACULA</option>
-        <option value="monokai">MONOKAI</option>
-        <option value="cmd">CMD CLASSIC</option>
+        {#each themes as { id, label }}
+          <option value={id}>{label}</option>
+        {/each}
       </select>
     </div>
   </header>
@@ -138,4 +135,28 @@
   }
 
   /* Command bar styles removed as BreadcrumbNav is now used */
+
+  /* On narrow screens the status bar's two groups can no longer share a
+     single row — stack them vertically and let items inside each group
+     wrap naturally. */
+  @media (max-width: 700px) {
+    .status-bar {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 0.3rem;
+    }
+    .left,
+    .right {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.4rem 1rem;
+    }
+    .status-bar .item {
+      margin-right: 0;
+    }
+    .theme-select {
+      margin-left: 0;
+    }
+  }
 </style>

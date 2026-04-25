@@ -5,7 +5,7 @@
 
     // TODO(dummy): placeholder bio paragraphs — rewrite in your voice.
     const bio = [
-        'Software engineer, currently at Naver. I spend most of my time on developer tooling — CLIs, browser extensions, editor plugins — anything that removes a small daily friction multiplied by a million.',
+        'Software engineer. I spend most of my time on developer tooling — CLIs, browser extensions, editor plugins — anything that removes a small daily friction multiplied by a million.',
         'I lean toward static over dynamic, local-first over cloud-first, monospace over proportional. Not out of nostalgia, but because constraints make software honest.',
         'This site is my notebook. No analytics, no comments, no newsletter. If something here is useful to you, you are welcome.',
     ];
@@ -13,8 +13,6 @@
     // TODO(dummy): placeholder tech stack — reflects nothing real yet.
     const stack = [
         { k: 'Languages',   v: 'TypeScript · Rust · Go · Svelte · Python' },
-        { k: 'Editor',      v: 'Neovim with Lazy.nvim + Cursor + Claude Code' },
-        { k: 'Shell',       v: 'zsh + starship + atuin' },
         { k: 'Infra',       v: 'Cloudflare, GitHub Actions, fly.io for side-projects' },
         { k: 'Terminal',    v: 'Ghostty + tmux' },
         { k: 'Desktop',     v: 'macOS (daily), NixOS (tinkering)' },

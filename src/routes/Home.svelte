@@ -3,34 +3,36 @@
     import { getPinned } from "@/lib/data/projects.js";
     import { getActivity } from "@/lib/data/activity.js";
     import { getPosts } from "@/lib/posts.js";
-    
     import ProjectRow from "@/lib/components/ProjectRow.svelte";
     import ActivityRow from "@/lib/components/ActivityRow.svelte";
     import PostRow from "@/lib/components/PostRow.svelte";
 
-    // Data for dashboard
-    const pinnedProjects = getPinned();
+    const pinned = getPinned();
     const recentActivity = getActivity(6);
     const recentPosts = getPosts().slice(0, 3);
 </script>
 
 <div class="dashboard">
-    <!-- Pinned Projects -->
-    <section class="section">
+    <!-- pinned projects -->
+    <section class="block">
         <div class="prompt">
             <span class="dollar">$</span> ls pinned/
+            <span class="count">{pinned.length} items</span>
         </div>
         <div class="list">
-            {#each pinnedProjects as project}
+            {#each pinned as project}
                 <ProjectRow {project} />
             {/each}
         </div>
+        <button class="cmd-link" onclick={() => router.navigate("/projects")}>
+            [ cd projects/ ] → see all
+        </button>
     </section>
 
-    <!-- Activity Feed -->
-    <section class="section">
+    <!-- recent activity -->
+    <section class="block">
         <div class="prompt">
-            <span class="dollar">$</span> git log --oneline -6
+            <span class="dollar">$</span> git log --oneline -{recentActivity.length}
         </div>
         <div class="list">
             {#each recentActivity as event}
@@ -39,29 +41,32 @@
         </div>
     </section>
 
-    <!-- Recent Posts -->
-    <section class="section">
+    <!-- recent posts -->
+    <section class="block">
         <div class="prompt">
-            <span class="dollar">$</span> tail -n 3 posts/
+            <span class="dollar">$</span> tail -n {recentPosts.length} posts/
         </div>
         <div class="list">
             {#each recentPosts as post}
                 <PostRow {post} />
             {/each}
         </div>
+        <button class="cmd-link" onclick={() => router.navigate("/posts")}>
+            [ cd posts/ ] → see all
+        </button>
     </section>
 
-    <!-- Navigation Help -->
-    <section class="section footer">
+    <!-- help -->
+    <section class="block">
         <div class="prompt">
             <span class="dollar">$</span> help
         </div>
-        <div class="nav-links">
-            <button onclick={() => router.navigate("/posts")} class="cmd-link">[POSTS]</button>
+        <div class="help">
+            <button class="cmd-link" onclick={() => router.navigate("/projects")}>cd projects/</button>
             <span class="sep">·</span>
-            <button onclick={() => router.navigate("/projects")} class="cmd-link">[PROJECTS]</button>
+            <button class="cmd-link" onclick={() => router.navigate("/posts")}>cd posts/</button>
             <span class="sep">·</span>
-            <button onclick={() => router.navigate("/about")} class="cmd-link">[ABOUT]</button>
+            <button class="cmd-link" onclick={() => router.navigate("/about")}>cd about/</button>
         </div>
     </section>
 </div>
@@ -71,10 +76,10 @@
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        max-width: 1000px;
+        max-width: 900px;
     }
 
-    .section {
+    .block {
         display: flex;
         flex-direction: column;
         gap: 0.5rem;
@@ -82,40 +87,50 @@
 
     .prompt {
         font-family: var(--font-mono);
-        font-weight: bold;
         color: var(--fg-color);
+        font-weight: bold;
+        letter-spacing: 0.02em;
     }
-    .dollar { color: var(--accent-primary); margin-right: 0.25rem; }
+    .dollar {
+        color: var(--accent-primary);
+        margin-right: 0.25rem;
+    }
+    .count {
+        color: var(--dim-color);
+        font-weight: normal;
+        margin-left: 0.5rem;
+        font-size: 0.85rem;
+    }
 
     .list {
         display: flex;
         flex-direction: column;
+        padding-left: 0.5rem;
     }
-
-    .nav-links {
-        display: flex;
-        gap: 1rem;
-        align-items: center;
-        padding-left: 1rem;
-    }
-    
-    .sep { color: var(--dim-color); }
 
     .cmd-link {
         background: none;
         border: none;
         color: var(--accent-secondary);
         font-family: var(--font-mono);
-        font-size: 1rem;
-        cursor: pointer;
-        text-decoration: underline;
+        font-size: 0.95rem;
         padding: 0;
+        margin-top: 0.4rem;
+        cursor: pointer;
+        text-align: left;
     }
     .cmd-link:hover {
         color: var(--accent-primary);
+        text-decoration: underline;
     }
 
-    .footer {
-        margin-top: 1rem;
+    .help {
+        font-family: var(--font-mono);
+        display: flex;
+        gap: 0.75rem;
+        padding-left: 1rem;
     }
+    .help .cmd-link { margin-top: 0; }
+    .sep { color: var(--dim-color); }
+
 </style>

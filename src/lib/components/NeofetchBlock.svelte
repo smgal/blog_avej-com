@@ -6,13 +6,8 @@
     <div class="nf-head">{profile.handle}@terminal</div>
     <div class="nf-rule">{'─'.repeat(profile.handle.length + 10)}</div>
     <div class="nf-row"><span class="nf-k">Name</span><span class="nf-v">{profile.name}</span></div>
-    <div class="nf-row"><span class="nf-k">Location</span><span class="nf-v">{profile.location}</span></div>
-    <div class="nf-row"><span class="nf-k">Role</span><span class="nf-v">{profile.role} @ {profile.org}</span></div>
-    <div class="nf-row"><span class="nf-k">Editor</span><span class="nf-v">{profile.editor}</span></div>
-    <div class="nf-row"><span class="nf-k">Shell</span><span class="nf-v">{profile.shell}</span></div>
+    <div class="nf-row"><span class="nf-k">Role</span><span class="nf-v">{profile.role}</span></div>
     <div class="nf-row"><span class="nf-k">Languages</span><span class="nf-v">{profile.langs.join(" · ")}</span></div>
-    <div class="nf-row"><span class="nf-k">Uptime</span><span class="nf-v">{profile.uptime}</span></div>
-    <div class="nf-row nf-now"><span class="nf-k">Now</span><span class="nf-v">{profile.now}</span></div>
     <div class="nf-quote">{profile.tagline}</div>
 </div>
 

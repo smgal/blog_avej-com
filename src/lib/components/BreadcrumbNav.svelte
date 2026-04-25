@@ -1,5 +1,5 @@
 <script>
-    import { router } from "../router.svelte.js";
+    import { router } from "@/lib/router.svelte.js";
 
     // Computed path segments based on current route
     let segments = $derived.by(() => {
