@@ -1,90 +1,40 @@
-/* Modern Terminal Design System */
+/* Modern Minimalist Design System */
 
 :root {
-    /* Default Theme: Neo-Future (Tokyo Night inspired) */
-    --bg-color: #1a1b26;
-    --fg-color: #a9b1d6;
-    --accent-primary: #ff007c;
-    /* Neon Pink */
-    --accent-secondary: #00e5ff;
-    /* Cyan */
-    --dim-color: #565f89;
-    --border-color: #414868;
-
-    --font-mono: 'Courier New', Courier, monospace;
-    --font-sans: 'Outfit', 'Noto Sans KR', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";
-    --font-post: Arial, Helvetica, sans-serif;
-    --code-bg: #151520;
-    /* Slightly darker than main bg */
+    /* Base Colors - Dark Mode but soft */
+    --bg-color: #121212;
+    --fg-color: #e0e0e0;
+    --fg-muted: #888888;
+    
+    /* Structured Block Colors */
+    --block-bg: #1e1e1e;
+    --border-color: #333333;
+    
+    /* Accents */
+    --accent-primary: #ffffff; /* Clean white for emphasis */
+    --accent-secondary: #aaaaaa;
+    
+    /* Typography */
+    --font-sans: 'Pretendard', 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --font-mono: 'JetBrains Mono', 'Fira Code', 'Courier New', Courier, monospace;
     --line-height: 1.6;
-}
 
-/* Theme: Amber Retro */
-[data-theme="amber"] {
-    --bg-color: #1e1e1e;
-    --fg-color: #ffb000;
-    --accent-primary: #ffb000;
-    --accent-secondary: #ffca28;
-    --dim-color: #6d4c00;
-    --border-color: #ffb000;
-    --code-bg: #141414;
-}
-
-/* Theme: Hacker Green */
-[data-theme="green"] {
-    --bg-color: #0d0d0d;
-    --fg-color: #00ff00;
-    --accent-primary: #00ff00;
-    --accent-secondary: #008000;
-    --dim-color: #003300;
-    --border-color: #00ff00;
-    --code-bg: #080808;
-}
-
-/* Theme: Dracula */
-[data-theme="dracula"] {
-    --bg-color: #282a36;
-    --fg-color: #f8f8f2;
-    --accent-primary: #ff79c6;
-    --accent-secondary: #8be9fd;
-    --dim-color: #6272a4;
-    --border-color: #bd93f9;
-    --code-bg: #21222c;
-}
-
-/* Theme: Monokai */
-[data-theme="monokai"] {
-    --bg-color: #272822;
-    --fg-color: #f8f8f2;
-    --accent-primary: #f92672;
-    --accent-secondary: #a6e22e;
-    --dim-color: #75715e;
-    --border-color: #66d9ef;
-    --code-bg: #1e1f1c;
-}
-
-/* Theme: CMD (Classic) */
-[data-theme="cmd"] {
-    --bg-color: #0c0c0c;
-    --fg-color: #cccccc;
-    --accent-primary: #ffffff;
-    --accent-secondary: #ffff00;
-    --dim-color: #808080;
-    --border-color: #cccccc;
-    --code-bg: #000000;
+    /* Spacing & Layout */
+    --max-width: 1024px;
+    --radius: 0px; /* Sharp corners for structured feel */
 }
 
 body {
     background-color: var(--bg-color);
     color: var(--fg-color);
-    font-family: var(--font-mono);
+    font-family: var(--font-sans);
     margin: 0;
     padding: 0;
     transition: background-color 0.3s, color 0.3s;
-    overflow: hidden;
-    /* App-like feel */
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
+    overflow-x: hidden;
+    overflow-y: auto; /* allow normal scrolling */
 }
 
 * {
@@ -94,9 +44,26 @@ body {
 a {
     color: var(--accent-secondary);
     text-decoration: none;
+    transition: color 0.2s;
 }
 
 a:hover {
-    text-decoration: underline;
     color: var(--accent-primary);
+}
+
+/* Utilities for structured blocks */
+.structured-block {
+    background-color: var(--block-bg);
+    border: 1px solid var(--border-color);
+    padding: 1.5rem;
+    margin-bottom: 2rem;
+}
+
+.structured-header {
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-bottom: 1rem;
+    color: var(--accent-primary);
+    border-bottom: 1px solid var(--border-color);
+    padding-bottom: 0.5rem;
 }

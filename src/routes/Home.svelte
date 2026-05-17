@@ -1,136 +1,188 @@
 <script>
-    import { router } from "@/lib/router.svelte.js";
-    import { getPinned } from "@/lib/data/projects.js";
-    import { getActivity } from "@/lib/data/activity.js";
-    import { getPosts } from "@/lib/posts.js";
-    import ProjectRow from "@/lib/components/ProjectRow.svelte";
-    import ActivityRow from "@/lib/components/ActivityRow.svelte";
-    import PostRow from "@/lib/components/PostRow.svelte";
-
-    const pinned = getPinned();
-    const recentActivity = getActivity(6);
-    const recentPosts = getPosts().slice(0, 3);
+    import { siteConfig } from "@/lib/data/site-config.js";
 </script>
 
-<div class="dashboard">
-    <!-- pinned projects -->
-    <section class="block">
-        <div class="prompt">
-            <span class="dollar">$</span> ls pinned/
-            <span class="count">{pinned.length} items</span>
-        </div>
-        <div class="list">
-            {#each pinned as project}
-                <ProjectRow {project} />
+<div class="home-container">
+    <!-- Hero Section -->
+    <section class="hero structured-block">
+        <div class="hero-desc">
+            {#each siteConfig.hero.introText as line}
+                <p>{line}</p>
             {/each}
         </div>
-        <button class="cmd-link" onclick={() => router.navigate("/projects")}>
-            [ cd projects/ ] → see all
-        </button>
-    </section>
-
-    <!-- recent activity -->
-    <section class="block">
-        <div class="prompt">
-            <span class="dollar">$</span> git log --oneline -{recentActivity.length}
-        </div>
-        <div class="list">
-            {#each recentActivity as event}
-                <ActivityRow {event} />
+        
+        <div class="hero-links">
+            {#each siteConfig.hero.links as link}
+                <a href={link.url} target="_blank" rel="noopener noreferrer" class="social-link">
+                    <span class="link-name">{link.name}:</span> {link.icon}
+                </a>
             {/each}
         </div>
     </section>
 
-    <!-- recent posts -->
-    <section class="block">
-        <div class="prompt">
-            <span class="dollar">$</span> tail -n {recentPosts.length} posts/
-        </div>
-        <div class="list">
-            {#each recentPosts as post}
-                <PostRow {post} />
+    <!-- Featured Projects Section -->
+    <section class="featured-projects">
+        <h2 class="section-title structured-header">Featured Projects</h2>
+        
+        <div class="projects-grid">
+            {#each siteConfig.featuredProjects as project}
+                <div class="project-card structured-block">
+                    <div class="project-image-wrapper">
+                        <!-- We use a placeholder image if it doesn't load or is a placeholder text, but here we just render img -->
+                        <img src={project.imageUrl} alt={project.title} class="project-image" />
+                    </div>
+                    <div class="project-info">
+                        <h3 class="project-title">{project.title}</h3>
+                        <p class="project-desc">{project.description}</p>
+                        <div class="project-tags">
+                            {#each project.tags as tag}
+                                <span class="tag">{tag}</span>
+                            {/each}
+                        </div>
+                        <a href={project.repoUrl} target="_blank" rel="noopener noreferrer" class="repo-link">
+                            View Repository &rarr;
+                        </a>
+                    </div>
+                </div>
             {/each}
-        </div>
-        <button class="cmd-link" onclick={() => router.navigate("/posts")}>
-            [ cd posts/ ] → see all
-        </button>
-    </section>
-
-    <!-- help -->
-    <section class="block">
-        <div class="prompt">
-            <span class="dollar">$</span> help
-        </div>
-        <div class="help">
-            <button class="cmd-link" onclick={() => router.navigate("/projects")}>cd projects/</button>
-            <span class="sep">·</span>
-            <button class="cmd-link" onclick={() => router.navigate("/posts")}>cd posts/</button>
-            <span class="sep">·</span>
-            <button class="cmd-link" onclick={() => router.navigate("/about")}>cd about/</button>
         </div>
     </section>
 </div>
 
 <style>
-    .dashboard {
+    .home-container {
         display: flex;
         flex-direction: column;
         gap: 2rem;
-        max-width: 900px;
     }
 
-    .block {
+    /* Hero Section */
+    .hero {
+        text-align: left;
+    }
+
+    .hero-desc {
+        font-size: 1.25rem;
+        color: var(--fg-color);
+        line-height: 1.8;
+        font-weight: 500;
+        margin-bottom: 2rem;
+    }
+
+    .hero-desc p {
+        margin: 0 0 0.5rem 0;
+    }
+
+    .hero-links {
+        display: flex;
+        gap: 1.5rem;
+        flex-wrap: wrap;
+    }
+
+    .social-link {
+        font-size: 1rem;
+        color: var(--accent-secondary);
+        display: flex;
+        gap: 0.5rem;
+        align-items: center;
+    }
+
+    .social-link:hover {
+        color: var(--accent-primary);
+    }
+
+    .link-name {
+        color: var(--fg-muted);
+        font-weight: 600;
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+    }
+
+    /* Projects Grid */
+    .projects-grid {
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 2rem;
+    }
+
+    /* Project Card */
+    .project-card {
         display: flex;
         flex-direction: column;
+        gap: 1.5rem;
+        padding: 0; /* Override structured-block padding to allow full-width image */
+        overflow: hidden;
+    }
+
+    .project-image-wrapper {
+        width: 100%;
+        aspect-ratio: 16 / 9;
+        background-color: var(--bg-color); /* Fallback bg for missing images */
+        border-bottom: 1px solid var(--border-color);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .project-image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+    }
+
+    .project-info {
+        padding: 0 1.5rem 1.5rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .project-title {
+        font-size: 1.5rem;
+        color: var(--accent-primary);
+        margin: 0;
+    }
+
+    .project-desc {
+        color: var(--fg-muted);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+    }
+
+    .project-tags {
+        display: flex;
+        flex-wrap: wrap;
         gap: 0.5rem;
     }
 
-    .prompt {
-        font-family: var(--font-mono);
-        color: var(--fg-color);
+    .tag {
+        font-size: 0.8rem;
+        color: var(--bg-color);
+        background-color: var(--fg-muted);
+        padding: 0.2rem 0.6rem;
+        border-radius: 4px;
+        font-weight: 600;
+    }
+
+    .repo-link {
+        margin-top: auto;
+        display: inline-block;
         font-weight: bold;
-        letter-spacing: 0.02em;
-    }
-    .dollar {
         color: var(--accent-primary);
-        margin-right: 0.25rem;
+        text-transform: uppercase;
+        font-size: 0.9rem;
+        letter-spacing: 0.05em;
     }
-    .count {
-        color: var(--dim-color);
-        font-weight: normal;
-        margin-left: 0.5rem;
-        font-size: 0.85rem;
-    }
-
-    .list {
-        display: flex;
-        flex-direction: column;
-        padding-left: 0.5rem;
+    
+    .repo-link:hover {
+        color: var(--fg-color);
     }
 
-    .cmd-link {
-        background: none;
-        border: none;
-        color: var(--accent-secondary);
-        font-family: var(--font-mono);
-        font-size: 0.95rem;
-        padding: 0;
-        margin-top: 0.4rem;
-        cursor: pointer;
-        text-align: left;
+    @media (min-width: 768px) {
+        .projects-grid {
+            grid-template-columns: repeat(2, 1fr);
+        }
     }
-    .cmd-link:hover {
-        color: var(--accent-primary);
-        text-decoration: underline;
-    }
-
-    .help {
-        font-family: var(--font-mono);
-        display: flex;
-        gap: 0.75rem;
-        padding-left: 1rem;
-    }
-    .help .cmd-link { margin-top: 0; }
-    .sep { color: var(--dim-color); }
-
 </style>

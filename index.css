@@ -9,7 +9,9 @@ body {
     margin: 0;
     padding: 0;
     background-color: var(--bg-color);
-    /* Fallback or defined in variables.css */
     color: var(--fg-color);
-    font-family: 'Courier New', Courier, monospace;
+    font-family: var(--font-sans);
+    line-height: var(--line-height);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }

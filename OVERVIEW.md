@@ -1,139 +1,58 @@
-# Site Overview
+# avej.com 사이트 개요 및 방향성 가이드
 
-> 주 1회 업데이트 전제로, 기존 터미널 미감을 **개발 활동 대시보드**로 확장한 개인 사이트.
+이 문서는 `avej.com` 웹사이트의 핵심 성격, 디자인 철학, 그리고 코드베이스가 지향해야 할 개발 방향성을 명시하여 차후 변경 작업 시 일관성을 유지하기 위해 작성되었습니다.
 
-## 설계 전제
+---
 
-- **업데이트 빈도가 낮음** — 포스트만으로는 2~3주 만에 사이트가 "죽은 듯이" 보이기 쉬움.
-- **터미널 미감은 유지** — 기존 자산을 버리지 않음. 다만 이제 "장식"이 아니라 **실제 정보**로 읽히도록 역할 재배치.
-- **축적된 데이터가 메인** — 프로젝트 상태·활동 피드·프로필이 항상 노출되는 콘텐츠. 포스트는 부록.
-- 결론: 홈을 **블로그 랜딩**에서 **개발자 대시보드**로 재설계.
+## 1. 사이트의 성격 및 목적 (Core Mission)
+`avej.com`은 개인 개발자 **smgal**의 공개 GitHub 저장소의 주요 프로젝트(특히 레트로 게임 복각/포팅 프로젝트인 `Hadar2026`, `MuArae2026`)를 효과적으로 소개하고 방문자를 저장소로 유인하는 것을 주 목적으로 하는 **포트폴리오 중심의 웹사이트**입니다.
 
-## 현재 규모
+- **프로젝트 중심**: 메인 화면에서 가장 시선이 집중되는 곳에 주요 프로젝트 카드들을 배치합니다.
+- **아카이브 및 게시판 유지**: 기존에 활성화되어 있던 개인 게시판(`Board`) 및 아카이브는 네비게이션을 통해 접근할 수 있도록 1단계 깊이(depth)를 두어 유지합니다.
+- **단순성과 지속 가능성**: 잦은 콘텐츠 업데이트가 없더라도 포트폴리오 자체로서 완성도 높은 인상을 줄 수 있도록 설계되었습니다.
 
-- 6개 라우트, 2개 포스트, 7개 dummy 프로젝트(3 pinned), 10개 dummy 활동 이벤트
-- Dummy 데이터는 모두 [TODO.md](TODO.md)와 코드 내 `TODO(dummy):` 마커로 추적 가능
+---
 
-## 페이지 구성
+## 2. 디자인 철학 및 UI/UX 원칙 (Design Principles)
+과하고 화려한 트렌디한 효과는 배제하며, **"깔끔하고 군더더기 없는 미니멀한 모던 UI"**를 지향합니다.
 
-### `/` — Home 대시보드 (활동 중심)
+### 2.1 잘 정리된 텍스트 구획 (Structured Text Blocks)
+- 기존 터미널 감성(스캔라인, 네온사인 등)의 장식적 요소는 걷어내되, **텍스트 위주로 정돈된 구획(Border와 적절한 여백)을 통해 정보를 명확히 전달하는 감성**은 그대로 계승합니다.
+- 복잡한 그래픽 요소 대신 깔끔한 선(`border-color`)과 컴팩트한 배경색(`block-bg`)의 구분을 통해 카드 및 섹션을 레이아웃화합니다.
 
-네 개 섹션이 위에서 아래로. 프로필 정체성은 `/about`으로 분리됨 — 홈은 "지금 뭐 하고 있나"에 집중.
+### 2.2 가독성 중심의 모노톤/산세리프
+- 터미널용 등폭 폰트 대신, 현대적이고 가독성이 뛰어난 산세리프 폰트(`Pretendard`, `Inter`, `Noto Sans KR` 등)를 메인 폰트로 적용하여 텍스트의 전달력을 높입니다.
+- 색상은 소프트한 다크 톤(기본 `#121212`)을 베이스로 하고, 무채색 계열의 화이트(`#ffffff`)와 그레이(`#aaaaaa`)로만 대비를 주어 차분하고 일관된 톤앤매너를 유지합니다.
 
-1. **`$ ls pinned/`** — 상단 고정 프로젝트 (기본 3개)
-   - 상태 뱃지 · 이름 · 언어 · 별 · 한줄 설명이 한 행
-   - `pinned: true`로 지정된 항목만 노출
-   - 소스: [projects.js](src/lib/data/projects.js)
+---
 
-2. **`$ git log --oneline -6`** — 최근 활동 피드
-   - 커밋(`·`) · PR(`↰`) · 릴리스(`★`) · 이슈(`!`) 혼합
-   - 소스: [activity.js](src/lib/data/activity.js)
+## 3. 핵심 페이지 및 데이터 구조 (Core Structure)
 
-3. **`$ tail -n 3 posts/`** — 최근 포스트 3개
-   - 자동으로 `src/content/posts/`의 최신 3개를 집음
+### 3.1 메인 페이지 (`/` — Home)
+- **Hero Section**: 개인의 기술 정체성을 설명하는 1~3줄의 핵심 소개 문구와 공식 깃허브 링크(`@smgal`)를 배치합니다.
+- **Featured Projects**: `Hadar2026`, `MuArae2026` 등 메인 프로젝트 카드가 2열 그리드로 정렬됩니다.
+  - **이미지 가이드**: 각 프로젝트 카드의 썸네일은 **16:9 비율(예: 800x450px)**을 필수로 유지합니다.
 
-4. **`$ help`** — 주요 섹션으로의 네비게이션 링크 한 줄
+### 3.2 데이터 중심의 관리 패턴 (`site-config.js`)
+홈페이지의 주요 문구 및 프로젝트 정보는 코드베이스와 완전히 격리하여 [site-config.js](src/lib/data/site-config.js) 파일 하나로 집중 관리합니다.
 
-### `/projects` — 전체 프로젝트 목록
-- status / recent-commit / stars / name 4가지 정렬 토글
-- 상태 뱃지 색깔로 활성도 한눈에 구분
-- 소스: [Projects.svelte](src/routes/Projects.svelte)
+- **수정 대상**:
+  - `siteConfig.hero.introText`: 홈 최상단 소개글 (배열 형식을 지원하므로 줄바꿈이 자유롭습니다.)
+  - `siteConfig.hero.links`: 깃허브 주소 및 추가 소셜 링크
+  - `siteConfig.featuredProjects`: 포트폴리오 카드 리스트 (제목, 설명, 썸네일 경로, 태그, 저장소 링크)
+- **효과**: 사이트 빌드 및 배포 시 이 데이터 파일만 교체하면 홈페이지의 모든 고정 콘텐츠가 안전하게 업데이트됩니다.
 
-### `/projects/:id` — 프로젝트 상세
-- 상태 · 이름 · 별 · desc · 메타(LANG/LAST/TAGS/REPO) · 긴 summary · 외부 repo 링크
-- 소스: [ProjectDetail.svelte](src/routes/ProjectDetail.svelte)
+---
 
-### `/posts`, `/posts/:slug` — 포스트
-- `/posts` — `$ ls posts/` 헤더, `PostRow` 행 리스트, BackLink로 홈 복귀
-- `/posts/:slug` — 마크다운 본문 (gray-matter 기반 frontmatter + marked + hljs 파싱시점 하이라이팅)
-- Home의 "tail -n 3" 섹션과 동일한 [PostRow](src/lib/components/PostRow.svelte) 컴포넌트 사용
+## 4. 향후 확장 및 다국어 대응 가이드
+- **프로젝트 추가**: 새로운 공개 프로젝트가 추가되면 `site-config.js`의 `featuredProjects` 배열에 신규 객체를 추가하기만 하면 그리드 UI가 유연하게 확장됩니다.
+- **다국어 대응 (영어 등)**: 추후 다국어 번역이 필요한 시점이 오면, `site-config.js`를 언어셋별로 구조화(예: `siteConfig.ko.hero`, `siteConfig.en.hero`)하여 라우터 또는 현재 언어 상태값에 따라 바인딩되도록 쉽게 확장할 수 있습니다.
 
-### `/about` — 정체성 중심 페이지
-두 개 프롬프트 섹션으로 구성:
+---
 
-1. **`$ neofetch`** — 프로필 블록 ([NeofetchBlock.svelte](src/lib/components/NeofetchBlock.svelte))
-   - 이름/위치/역할/에디터/쉘/언어/Uptime/Now + 한줄 태그라인
-   - 소스: [profile.js](src/lib/data/profile.js)
-
-2. **`$ cat about.md`** — 본문
-   - bio 3문단 · 현재 스택(key-value) · 개발 원칙 · 링크
-   - 소스: [About.svelte](src/routes/About.svelte)
-
-## 컨셉: "터미널답게"란 무엇인가
-
-"Hacker 테마" 사이트가 유행한 건 2023~2025년. 지금 기준 **"예쁘지만 빈 집"**으로 읽히기 쉬움. 이 사이트는 그 함정을 피하려고 세 가지 규칙을 뒀음.
-
-### 1. 모든 섹션이 "명령어 결과"로 보인다
-- 섹션 헤더는 프롬프트(`$ ls pinned/`, `$ git log ...`)
-- `ls`, `git log`, `cat`, `tail` 같은 실제 유닉스 명령이 메타포의 기반
-- 내용은 **진짜 의미**가 있어야 하고, 장식성 ASCII 아트는 최소화 (scanline 정도만 허용)
-
-### 2. 상태로 "살아있음"을 표현한다
-- 프로젝트 뱃지: `[ACTIVE]` · `[WIP]` · `[STALE]` · `[ARCHIVED]`
-- **STALE/ARCHIVED를 일부러 남겨둠** — 모두 ACTIVE면 뱃지 자체가 의미 없음
-- 활동 피드의 sigil(`·` / `↰` / `★` / `!`): 텍스트를 읽기 전에 이벤트 종류를 구분
-
-### 3. 포스트가 뜸해도 사이트가 살아있다
-- 매주 포스트를 안 써도 activity 피드 2~3줄 추가만으로 "움직이는" 느낌
-- 프로필의 `now` 한 줄도 주 단위 갱신 포인트
-- 장기적으론 GitHub API 연동으로 자동화 가능 (현재는 수동)
-
-## 데이터 레이어
-
-모든 대시보드 콘텐츠는 순수 JS 데이터로 분리됨 — UI는 이걸 읽기만 함.
-
-| 파일 | 역할 | 스키마 |
-|---|---|---|
-| [profile.js](src/lib/data/profile.js) | 본인 프로필 | 단일 객체 |
-| [projects.js](src/lib/data/projects.js) | 프로젝트 카탈로그 | `Project[]` (JSDoc 정의) |
-| [activity.js](src/lib/data/activity.js) | 활동 이벤트 스트림 | `Event[]` (JSDoc 정의) |
-
-이 분리 덕분에 나중에 GitHub API로 교체해도 **UI는 한 줄도 안 바뀜** — 이 세 파일의 export만 fetch 래퍼로 갈아끼우면 됨.
-
-## 유지보수 루틴
-
-**매주 (선택)**
-- `profile.js`의 `now` 한 줄 업데이트
-- `activity.js`에 새 이벤트 1~3개 추가 (오래된 건 삭제)
-
-**새 프로젝트 만들 때**
-- `projects.js`에 `Project` 1개 추가
-- `pinned: true`로 올릴지 결정 (홈에 3개 유지 권장)
-
-**새 포스트 올릴 때**
-- `src/content/posts/`에 `YYYY_MMDD_SEQ.md` 드롭
-- 그 외 아무 것도 안 해도 됨 — 홈의 `tail -n 3` 섹션이 자동 반영
-
-**방치 신호**
-- activity 피드 최상단이 "2w ago", "1mo ago"로 밀리기 시작 → **GitHub API 자동화를 고려할 시점**
-
-## 확장 지점
-
-### 새 라우트
-[routes.js](src/lib/routes.js) 배열에 `{ pattern, component }` 한 줄. App.svelte는 건드리지 않음.
-
-### 새 테마
-- [variables.css](src/styles/variables.css)에 `[data-theme="<id>"]` 블록
-- [theme.svelte.js](src/lib/stores/theme.svelte.js)의 `themes` 배열에 `{ id, label }` 한 줄
-
-### 새 이벤트 종류 (sigil 추가 등)
-- [activity.js](src/lib/data/activity.js)의 `EventKind` JSDoc 확장
-- [ActivityRow.svelte](src/lib/components/ActivityRow.svelte)의 `KIND_SIGIL` 맵에 엔트리 추가
-
-### GitHub API 실제 연동
-`activity.js`와 `projects.js`를 각각 fetch 래퍼로 교체. 스키마가 이미 API 응답에 가깝게 맞춰져 있어 교체는 기계적.
-- events: `GET /users/{user}/events/public` (60 req/hr unauth)
-- repos: `GET /users/{user}/repos` (60 req/hr unauth)
-
-## 한계 / 의식적으로 뺀 것
-
-- **해시 라우팅 (`/#/projects`)** — SEO와 소셜 공유 품질이 약함. 진짜 URL로 가려면 라우터 전면 교체 필요.
-- **번들 1.1MB (gzip 354KB)** — 주범은 `highlight.js` 전 언어 기본 등록. 포스트 늘면 필요한 언어만 등록하는 `highlight.js/lib/core` 경로로 갈 가치 있음.
-- **`{@html}` XSS** — 자작 콘텐츠 전제라 무방비. 외부 기여 받게 되면 DOMPurify 필요.
-- **테스트 0개** — 변경 검증은 수동(dev 서버 + 브라우저).
-
-## 관련 문서
-
-- [CLAUDE.md](CLAUDE.md) — 코드베이스 작업 시 AI가 참고하는 기술 문서 (아키텍처/관례)
-- [TODO.md](TODO.md) — dummy 콘텐츠 교체 체크리스트
-- 이 문서는 2026-04-24 대시보드 재설계 시점 스냅샷. 구조가 크게 바뀌면 같이 업데이트 필요.
+## 5. 작업 시 참고해야 할 핵심 파일
+- [App.svelte](src/App.svelte): 메인 라우팅 컴포넌트 마운트
+- [Layout.svelte](src/lib/components/Layout.svelte): 네비게이션 헤더 및 푸터가 포함된 전역 레이아웃
+- [Home.svelte](src/routes/Home.svelte): Hero 섹션과 Featured Projects를 결합하는 홈페이지 뷰
+- [site-config.js](src/lib/data/site-config.js): **(가장 중요)** 메인 콘텐츠 통합 데이터 허브
+- [variables.css](src/styles/variables.css): 색상, 폰트, 구획 박스 스타일을 정의하는 디자인 시스템
